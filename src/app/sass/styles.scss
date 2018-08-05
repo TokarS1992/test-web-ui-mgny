@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Raleway:400,500,600,700,800,900');
+@import "variables";
+@import "mixins";
+
+body {
+  background-color: $bodyBgColor;
+  @include font('Raleway');
+
+  .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
+  .not-allowed {
+    cursor: not-allowed;
+  }
+
+  .no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .actions-form {
+    button {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .remember-block {
+    margin-bottom: 15px;
+  }
+}

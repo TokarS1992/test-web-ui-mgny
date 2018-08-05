@@ -1,0 +1,19 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+
+.edit-block {
+  margin-bottom: 20px;
+  &__line-top {
+    margin-bottom: 15px;
+  }
+  &__line-bottom {
+    margin-top: 15px;
+  }
+  .form-control {
+    @include form-control(join($defaultStyleFormControl, (background-color: #D8EDEE, border-color: #D2EAEB, color: #225A59)));
+  }
+  textarea {
+    min-height: 70px;
+  }
+}

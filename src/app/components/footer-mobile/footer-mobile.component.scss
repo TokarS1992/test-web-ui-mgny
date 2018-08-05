@@ -1,0 +1,23 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+@media screen and (max-width: 768px) {
+  .mobile-buttons {
+    padding: 20px 0;
+    border-top: 1px solid #BDE3E4;
+    a {
+      border-radius: 50%;
+      display: inline-block;
+      @include w_h(50px, 50px);
+      background-color: #5096D1;
+      span {
+        text-indent: -9999px;
+      }
+      i {
+        font-size: 22px;
+        color: #fff;
+      }
+      overflow: hidden;
+    }
+  }
+}

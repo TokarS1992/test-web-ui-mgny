@@ -1,0 +1,70 @@
+<div class="edit-block">
+    <div class="d-flex justify-content-between align-items-center edit-block__line-top">
+        <span *ngIf="inputValFirst.constructor.name === 'String'">{{property}}</span>
+
+        <input
+                *ngIf="inputValFirst.constructor.name === 'FormControl'"
+                [ngClass]="{
+                            'form-control-plaintext': inputValFirst.disabled,
+                            'form-control': !inputValFirst.disabled
+                        }"
+                [readonly]="inputValFirst.disabled"
+                [formControl]="inputValFirst"
+        >
+
+        <button
+                *ngIf="!isEditing"
+                class="btn btn-outline-primary"
+                type="button"
+                (click)="editAction([inputValSecond, inputValFirst])"
+                [disabled]="inputValSecond.invalid"
+                [class.not-allowed]="inputValSecond.invalid"
+        >
+            <fa name="pencil" style="margin-right: 5px"></fa>
+            <span>Edit</span>
+        </button>
+    </div>
+
+    <ng-content select="alert-block-first"></ng-content>
+
+    <input
+            *ngIf="!textArea && !maskForInputSecond"
+            class="form-control"
+            [formControl]="inputValSecond"
+            [attr.disabled]="inputValSecond.disabled ? '' : null"
+            [class.not-allowed]="inputValSecond.disabled"
+    >
+
+    <input
+            *ngIf="maskForInputSecond"
+            class="form-control"
+            [formControl]="inputValSecond"
+            [attr.disabled]="inputValSecond.disabled ? '' : null"
+            [class.not-allowed]="inputValSecond.disabled"
+            [textMask]="{mask: maskForInputSecond}"
+    >
+
+    <textarea
+            *ngIf="textArea"
+            class="form-control"
+            [formControl]="inputValSecond"
+            [attr.disabled]="inputValSecond.disabled ? '' : null"
+            [class.not-allowed]="inputValSecond.disabled"
+    >
+    </textarea>
+
+    <ng-content select="alert-block-second"></ng-content>
+
+    <div class="d-flex align-items-center edit-block__line-bottom">
+        <button
+                type="button"
+                class="btn btn-success"
+                *ngIf="isEditing"
+                (click)="editAction([inputValFirst, inputValSecond])"
+                [disabled]="inputValSecond.invalid"
+                [class.not-allowed]="inputValSecond.invalid"
+        >Edit</button>
+
+        <span *ngIf="isEditing && !inputValSecond.untouched" [style.color]="!isValidInputVals.status ? 'red' : 'green'" style="margin-left: 10px;">Form {{isValidInputVals.text}}</span>
+    </div>
+</div>

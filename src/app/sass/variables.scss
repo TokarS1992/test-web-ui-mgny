@@ -1,0 +1,13 @@
+$colorTab: #60A8DA;
+$colorFormControl: #1D4A48;
+$bodyBgColor: #F2F8F8;
+
+$defaultPosLine: (left: 0, height: 2px);
+$defaultStyleFormControl: (width: 100%, height: 50px);
+
+%form-control-focus {
+  &:focus {
+    box-shadow: none;
+    border-color: $colorFormControl;
+  }
+}

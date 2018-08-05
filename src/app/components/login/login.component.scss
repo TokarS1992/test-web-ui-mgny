@@ -1,0 +1,106 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+$borderChecked: 7px;
+
+%mar-ripple-element {
+  .mat-ripple-element {
+    background-color: rgba(121, 112, 115, 0.26) !important;
+  }
+}
+
+.wrapper-login {
+  margin-top: 50px;
+  form {
+    color: $colorFormControl;
+    label {
+      @include font('Raleway', 600);
+    }
+    .form-control {
+      @include form-control(join($defaultStyleFormControl, (border-color: $colorFormControl)))
+    }
+    .mat-checkbox {
+      &.mat-checkbox-checked {
+        .mat-checkbox-background {
+          border-radius: $borderChecked;
+          background-color: gray;
+        }
+        @extend %mar-ripple-element;
+      }
+      .mat-checkbox-inner-container {
+        @include w_h(25px, 25px);
+        .mat-checkbox-frame {
+          border-radius: $borderChecked;
+        }
+      }
+      @extend %mar-ripple-element;
+    }
+    .actions-form {
+      margin-top: 30px;
+      margin-bottom: 60px;
+      .btn {
+        padding-left: 50px;
+        padding-right: 50px;
+        border: none;
+        font-size: 18px;
+        &.sign-in {
+          background-color: #86C260;
+        }
+        &.cancel {
+          background-color: #3C756F;
+        }
+      }
+    }
+    .block-or {
+      position: relative;
+      margin-bottom: 50px;
+      &:before {
+        @include orBlockLine(join($defaultPosLine, (width: 46%)));
+      }
+      &:after {
+        @include orBlockLine((right: 0, width: 46%, height: 2px));
+      }
+      span {
+        color: $colorFormControl;
+        @include font('Raleway', 900);
+        text-transform: uppercase;
+      }
+    }
+    .fb-block {
+      margin-bottom: 40px;
+      &__button {
+        @include font('Raleway');
+        padding: 15px 25px;
+        background-color: #2360B3;
+        border-radius: 5px;
+        span {
+          margin-left: 15px;
+        }
+      }
+    }
+    .links {
+      margin-bottom: 20px;
+      .text {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+.mat-tab-labels {
+  justify-content: center;
+  .mat-tab-label {
+    min-width: auto;
+    margin-right: 40px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .mat-tab-label-content {
+    color: $colorTab;
+  }
+}
+
+.mat-ink-bar {
+  background-color: $colorTab !important;
+}

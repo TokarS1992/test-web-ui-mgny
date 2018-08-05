@@ -1,0 +1,33 @@
+@import "variables";
+
+@mixin w_h($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
+}
+
+@mixin font($name: 'Helwetica', $weight: 500) {
+  font-family: $name;
+  font-weight: $weight;
+}
+
+@mixin orBlockLine($defaultPosLine, $bg: #D8E4E2) {
+  content: '';
+  position: absolute;
+  top: 50%;
+  display: block;
+  background-color: $bg;
+
+  @each $prop, $val in $defaultPosLine {
+    #{$prop}: $val;
+    @if $prop == 'height' {
+      margin-bottom: (-$val/2);
+    }
+  }
+}
+
+@mixin form-control($defaultStyleFormControl) {
+  @each $prop, $val in $defaultStyleFormControl {
+    #{$prop}: $val;
+  }
+  @extend %form-control-focus;
+}

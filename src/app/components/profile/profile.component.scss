@@ -1,0 +1,37 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+.wrapper-profile {
+  padding-top: 20px;
+  .title-block {
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    color: #215958;
+    margin-bottom: 20px;
+    &:after {
+      @include orBlockLine((right: -10px, width: 85%, height: 2px))
+    }
+  }
+  .personal-block,
+  .address-book {
+    margin-bottom: 20px;
+  }
+  .save-block {
+    margin-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper-profile {
+    .add-button {
+      display: block;
+      width: 100%;
+    }
+    .title-block {
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

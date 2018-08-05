@@ -1,0 +1,96 @@
+<mat-tab-group [headerPosition]="tabPosition">
+    <mat-tab label="Sign In">
+        <div class="wrapper-login">
+            <div class="container">
+                <form [formGroup]="formLogin" novalidate >
+                    <div class="row justify-content-md-center">
+                        <div class="col-12 col-sm-6">
+                            <label>Email</label>
+                            <input class="form-control" [formControl]="formLogin.controls['email']">
+
+                            <div class="alert alert-danger"
+                                 *ngIf="formLogin.controls['email'].errors && formLogin.controls['email'].touched" style="margin-top: 10px">
+                                <div *ngIf="formLogin.controls['email'].hasError('required')">This field required</div>
+                                <div *ngIf="formLogin.controls['email'].hasError('email')">Incorrect email address</div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <label>Password</label>
+                            <input class="form-control" type="password" [formControl]="formLogin.controls['password']">
+
+                            <div class="alert alert-danger"
+                                 *ngIf="formLogin.controls['password'].errors && formLogin.controls['password'].touched" style="margin-top: 10px">
+                                <div *ngIf="formLogin.controls['password'].hasError('required')">This field required</div>
+                                <div *ngIf="formLogin.controls['password'].hasError('pattern')">Invalid enter symbols. Correct: any letters or/and numbers without special character</div>
+                                <div *ngIf="formLogin.controls['password'].hasError('minlength')">Invalid enter min length password. Correct length: {{minLengthPass}}</div>
+                                <div *ngIf="formLogin.controls['password'].hasError('maxlength')">Invalid enter max length password. Correct length: {{maxLengthPass}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-md-center actions-form">
+                        <div class="col-12 col-sm-12 d-none d-block d-sm-block d-md-none">
+                            <div class="row">
+                                <div class="col col-sm-6 d-md-flex align-items-md-center remember-block">
+                                    <mat-checkbox>Remember Me</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="row">
+                                <div class="col col-sm-6 d-md-flex align-items-md-center d-none d-md-block">
+                                    <mat-checkbox>Remember Me</mat-checkbox>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6">
+                                    <button class="btn btn-primary btn-lg btn-block cancel text-uppercase" type="button">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6">
+                                    <button class="btn btn-primary btn-lg btn-block sign-in text-uppercase" (click)="login(formLogin)">Sign in</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center no-gutters">
+                        <div class="col col-sm-10 block-or d-flex justify-content-center">
+                            <span class="d-inline-block">Or</span>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center fb-block">
+                        <button class="btn btn-primary uppercase fb-block__button" type="button">
+                            <fa name="facebook"></fa>
+                            <span>Login with facebook</span>
+                        </button>
+                    </div>
+
+                    <div class="row justify-content-center links">
+                        <div class="links__forgot-pass">
+                            <span class="text-capitalize text">Forgot your password?</span>
+                            <a href="#" class="text-capitalize">
+                                <ins>Click here</ins>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center links">
+                        <div class="links__create-account">
+                            <span class="text">Don`t have an account?</span>
+                            <a href="#">
+                                <ins>Create an Account</ins>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <app-footer-mobile></app-footer-mobile>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Create an Account"> Create an Account view </mat-tab>
+</mat-tab-group>

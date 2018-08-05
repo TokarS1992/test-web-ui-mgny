@@ -1,0 +1,214 @@
+<div class="wrapper-profile">
+    <div class="container">
+        <form
+                [formGroup]="formProfile"
+                novalidate
+                #locControls="localVariables"
+                [localVariables]="{
+                    controlName: formProfile.controls['name'],
+                    controlEmail: formProfile.controls['email']
+                }"
+        >
+            <div class="row title-block">
+                <div class="col-12 col-sm-12">
+                    Personal Info
+                </div>
+            </div>
+
+            <div class="row personal-block">
+                <div class="col-12 col-sm-6">
+                    <app-profile-block-edit [inputValFirst]="'Name'" [inputValSecond]="locControls.controlName" (changeStatusItem)="updateStatusItem($event)">
+                        <alert-block-second>
+                            <div class="alert alert-danger"
+                            *ngIf="locControls.controlName.errors && locControls.controlName.touched" style="margin-top: 10px">
+                                <div *ngIf="locControls.controlName.hasError('required')">This field required</div>
+                                <div *ngIf="locControls.controlName.hasError('minlength')">Invalid enter min length name. Correct length: 2</div>
+                            </div>
+                        </alert-block-second>
+                    </app-profile-block-edit>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <app-profile-block-edit [inputValFirst]="'Email'" [inputValSecond]="locControls.controlEmail" (changeStatusItem)="updateStatusItem($event)">
+                        <alert-block-second>
+                            <div class="alert alert-danger"
+                                 *ngIf="locControls.controlEmail.errors && locControls.controlEmail.touched" style="margin-top: 10px">
+                                <div *ngIf="locControls.controlEmail.hasError('required')">This field required</div>
+                                <div *ngIf="locControls.controlEmail.hasError('email')">Incorrect email address</div>
+                            </div>
+                        </alert-block-second>
+                    </app-profile-block-edit>
+                </div>
+            </div>
+
+            <div class="row title-block">
+                <div class="col col-sm-12">
+                    Address book
+                </div>
+            </div>
+
+            <div class="row address-book" formArrayName="addressBook">
+                <div class="none-results col-12 col-sm-12" *ngIf="currentUser.addressBook.length === 0" style="margin-bottom: 15px;">
+                    None address
+                </div>
+
+                <div class="col-12 col-sm-6" *ngFor="let address of formProfile.get('addressBook').controls; let i = index">
+                    <app-profile-block-edit
+                            *ngIf="!address.controls['isNew'].value"
+                            [inputValFirst]="address.controls['name']"
+                            [inputValSecond]="address.controls['content']"
+                            [textArea]="true"
+                            (changeStatusItem)="updateStatusItem($event)"
+                    >
+                        <alert-block-first>
+                            <div class="alert alert-danger"
+                                 *ngIf="address.controls['name'].errors && address.controls['name'].touched" style="margin-top: 10px">
+                                <div *ngIf="address.controls['name'].hasError('required')">This field required</div>
+                                <div *ngIf="address.controls['name'].hasError('minlength')">Invalid enter min length symbols. Correct length: 2</div>
+                            </div>
+                        </alert-block-first>
+
+                        <alert-block-second>
+                            <div class="alert alert-danger"
+                                 *ngIf="address.controls['content'].errors && address.controls['content'].touched" style="margin-top: 10px">
+                                <div *ngIf="address.controls['content'].hasError('required')">This field required</div>
+                                <div *ngIf="address.controls['content'].hasError('minlength')">Invalid enter min length symbols. Correct length: 10</div>
+                                <div *ngIf="address.controls['content'].hasError('maxlength')">Invalid enter min length symbols. Correct length: 100</div>
+                            </div>
+                        </alert-block-second>
+                    </app-profile-block-edit>
+
+                    <div [formGroupName]="i" style="margin-bottom: 15px;" *ngIf="address.controls['isNew'].value">
+                        <div class="d-flex justify-content-start align-items-center" style="margin-bottom: 10px;">
+                            <span>Name</span>
+                        </div>
+
+                        <input class="form-control" formControlName="name" style="margin-bottom: 10px;">
+
+                        <div class="alert alert-danger"
+                             *ngIf="address.controls['name'].errors && address.controls['name'].touched" style="margin-top: 10px">
+                            <div *ngIf="address.controls['name'].hasError('required')">This field required</div>
+                            <div *ngIf="address.controls['name'].hasError('minlength')">Invalid enter min length symbols. Correct length: 2</div>
+                        </div>
+
+                        <div class="d-flex justify-content-start align-items-center" style="margin-bottom: 10px;">
+                            <span>Content</span>
+                        </div>
+
+                        <textarea class="form-control" formControlName="content" style="margin-bottom: 10px; min-height: 70px;"></textarea>
+
+                        <div class="alert alert-danger"
+                             *ngIf="address.controls['content'].errors && address.controls['content'].touched" style="margin-top: 10px">
+                            <div *ngIf="address.controls['content'].hasError('required')">This field required</div>
+                            <div *ngIf="address.controls['content'].hasError('minlength')">Invalid enter min length symbols. Correct length: 10</div>
+                            <div *ngIf="address.controls['content'].hasError('maxlength')">Invalid enter max length symbols. Correct length: 100</div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="btn btn-success" (click)="saveItem(address)" [disabled]="address.invalid" style="margin-right: 10px;">Save</button>
+                            <button type="button" class="btn" [ngClass]="{'btn-primary': address.controls['isNew'].value}" (click)="deleteItem('addressBook', address)">{{address.controls['isNew'].value ? 'Cancel' : 'Delete'}}</button>
+                            <span *ngIf="!address.untouched" [style.color]="address.invalid ? 'red' : 'green'" style="margin-left: 10px;">Form {{address.status.toLowerCase()}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12" style="margin-top: 20px;">
+                    <button
+                            class="btn btn-primary add-button"
+                            type="button"
+                            (click)="addItem('addressBook')"
+                            [disabled]="maxAddressBook.different === 0"
+                            [class.not-allowed]="maxAddressBook.different === 0"
+                    >Abb new address {{maxAddressBook.different !== 0 ? ': ' + maxAddressBook.different : ''}}</button>
+                </div>
+            </div>
+
+            <div class="row title-block">
+                <div class="col-12 col-sm-12">
+                    Contact info
+                </div>
+            </div>
+
+            <div class="row address-book" formArrayName="contactInfo">
+                <div class="none-results col-12 col-sm-12" *ngIf="currentUser.contactInfo.length === 0" style="margin-bottom: 15px;">
+                    None contacts
+                </div>
+
+                <div class="col-12 col-sm-6" *ngFor="let contact of formProfile.get('contactInfo').controls; let i = index">
+                    <app-profile-block-edit
+                            *ngIf="!contact.controls['isNew'].value"
+                            [inputValFirst]="contact.controls['name']"
+                            [inputValSecond]="contact.controls['phone']"
+                            [maskForInputSecond]="maskPhone"
+                            (changeStatusItem)="updateStatusItem($event)"
+                    >
+                        <alert-block-first>
+                            <div class="alert alert-danger"
+                                 *ngIf="contact.controls['name'].errors && contact.controls['name'].touched" style="margin-top: 10px">
+                                <div *ngIf="contact.controls['name'].hasError('required')">This field required</div>
+                                <div *ngIf="contact.controls['name'].hasError('minlength')">Invalid enter min length symbols. Correct length: 2</div>
+                            </div>
+                        </alert-block-first>
+
+                        <alert-block-second>
+                            <div class="alert alert-danger"
+                                 *ngIf="contact.controls['phone'].errors && contact.controls['phone'].touched" style="margin-top: 10px">
+                                <div *ngIf="contact.controls['phone'].hasError('required')">This field required</div>
+                            </div>
+                        </alert-block-second>
+                    </app-profile-block-edit>
+
+                    <div [formGroupName]="i" style="margin-bottom: 15px;" *ngIf="contact.controls['isNew'].value">
+                        <div class="d-flex justify-content-start align-items-center" style="margin-bottom: 10px;">
+                            <span>Contact name</span>
+                        </div>
+
+                        <input class="form-control" formControlName="name" style="margin-bottom: 10px;">
+
+                        <div class="alert alert-danger"
+                             *ngIf="contact.controls['name'].errors && contact.controls['name'].touched" style="margin-top: 10px">
+                            <div *ngIf="contact.controls['name'].hasError('required')">This field required</div>
+                            <div *ngIf="contact.controls['name'].hasError('minlength')">Invalid enter min length symbols. Correct length: 2</div>
+                        </div>
+
+                        <div class="d-flex justify-content-start align-items-center" style="margin-bottom: 10px;">
+                            <span>Phone</span>
+                        </div>
+
+                        <input class="form-control" formControlName="phone" style="margin-bottom: 10px;" [textMask]="{mask: maskPhone}">
+
+                        <div class="alert alert-danger"
+                             *ngIf="contact.controls['phone'].errors && contact.controls['phone'].touched" style="margin-top: 10px">
+                            <div *ngIf="contact.controls['phone'].hasError('required')">This field required</div>
+                            <!--<div *ngIf="address.controls['phone'].hasError('minlength')">Invalid enter min length symbols. Correct length: 10</div>-->
+                            <!--<div *ngIf="address.controls['phone'].hasError('maxlength')">Invalid enter max length symbols. Correct length: 100</div>-->
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="btn btn-success" (click)="saveItem(contact)" [disabled]="contact.invalid" style="margin-right: 10px;">Save</button>
+                            <button type="button" class="btn" [ngClass]="{'btn-primary': contact.controls['isNew'].value}" (click)="deleteItem('contactInfo', contact )">{{contact.controls['isNew'].value ? 'Cancel' : 'Delete'}}</button>
+                            <span *ngIf="!contact.untouched" [style.color]="contact.invalid ? 'red' : 'green'" style="margin-left: 10px;">Form {{contact.status.toLowerCase()}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-12" style="margin-top: 20px;">
+                    <button
+                            class="btn btn-primary add-button"
+                            type="button"
+                            (click)="addItem('contactInfo')"
+                            [disabled]="maxContactInfo.different === 0"
+                            [class.not-allowed]="maxContactInfo.different === 0"
+                    >Abb new phone {{maxContactInfo.different !== 0 ? ': ' + maxContactInfo.different : ''}}</button>
+                </div>
+            </div>
+
+            <div class="row save-block">
+                <div class="col-12 col-sm-12">
+                    <button class="btn btn-success" type="button" (click)="saveChangesForm(formProfile)" [disabled]="formProfile.invalid">Save changes</button>
+                </div>
+            </div>
+        </form>
+        <app-footer-mobile></app-footer-mobile>
+    </div>
+</div>
