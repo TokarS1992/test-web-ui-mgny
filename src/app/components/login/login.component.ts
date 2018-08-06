@@ -23,7 +23,7 @@ export class LoginComponent extends AbstructForm implements OnInit {
     }
     ngOnInit() {
         this.formLogin = new FormGroup({
-            email: this.getFormControl('', {required: true, email: true}),
+            email: this.getFormControl('', {required: true, email: true, maxLength: 50}),
             password: this.getFormControl('', {
                 required: true,
                 minLength: this.minLengthPass,

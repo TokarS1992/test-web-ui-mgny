@@ -12,6 +12,7 @@
                                  *ngIf="formLogin.controls['email'].errors && formLogin.controls['email'].touched" style="margin-top: 10px">
                                 <div *ngIf="formLogin.controls['email'].hasError('required')">This field required</div>
                                 <div *ngIf="formLogin.controls['email'].hasError('email')">Incorrect email address</div>
+                                <div *ngIf="formLogin.controls['email'].hasError('maxlength')">Invalid enter max length name. Correct length: 50</div>
                             </div>
                         </div>
 

@@ -23,6 +23,7 @@
                             *ngIf="locControls.controlName.errors && locControls.controlName.touched" style="margin-top: 10px">
                                 <div *ngIf="locControls.controlName.hasError('required')">This field required</div>
                                 <div *ngIf="locControls.controlName.hasError('minlength')">Invalid enter min length name. Correct length: 2</div>
+                                <div *ngIf="locControls.controlName.hasError('maxlength')">Invalid enter max length name. Correct length: 50</div>
                             </div>
                         </alert-block-second>
                     </app-profile-block-edit>
@@ -203,9 +204,14 @@
                 </div>
             </div>
 
-            <div class="row save-block">
+            <div class="row save-block d-flex align-item-center">
                 <div class="col-12 col-sm-12">
                     <button class="btn btn-success" type="button" (click)="saveChangesForm(formProfile)" [disabled]="formProfile.invalid">Save changes</button>
+                    <span
+                            class="status-save"
+                            style="margin-left: 15px;"
+                            [@viewTextUpdateForm]="stateAnimate"
+                    >Form was update</span>
                 </div>
             </div>
         </form>
